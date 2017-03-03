@@ -10,6 +10,7 @@ namespace UnityStandardAssets._2D
         [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
+		[SerializeField] public int Lives = 3; 
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -19,6 +20,7 @@ namespace UnityStandardAssets._2D
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+		private Vector3 start;
 
         private void Awake()
         {
@@ -27,6 +29,7 @@ namespace UnityStandardAssets._2D
             m_CeilingCheck = transform.Find("CeilingCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+			start = m_Rigidbody2D.position;
         }
 
 
@@ -110,5 +113,20 @@ namespace UnityStandardAssets._2D
             theScale.x *= -1;
             transform.localScale = theScale;
         }
+
+		void OnCollisionEnter2D(Collision2D coll) {
+			if (coll.gameObject.tag == "Enemy") {
+				Lives--;
+				m_Rigidbody2D.transform.position = start;
+				print ("Lives: "+Lives);
+				if (Lives <= 0) {
+					Destroy (this.gameObject);
+				}
+			} else if (coll.gameObject.tag == "Heart") {
+				Lives++;
+				Destroy (coll.gameObject);
+				print ("Lives: "+Lives);
+			}
+		}
     }
 }
