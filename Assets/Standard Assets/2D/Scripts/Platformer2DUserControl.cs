@@ -16,7 +16,11 @@ namespace UnityStandardAssets._2D
 		private int rNum=0;
 		private int lNum=0;
 		private int time=0;
-
+		private GameObject key;
+		private Transform lightUp;
+		private Transform lightRight;
+		private Transform lightLeft;
+		private	string keyName;
 
         private void Awake()
         {
@@ -27,6 +31,9 @@ namespace UnityStandardAssets._2D
 			print ("Jump: "+jumpKey[jNum]);
 			print ("Right: "+rightKey[rNum]);
 			print ("Left: "+leftKey[lNum]);
+			lightRight=GameObject.Find("Canvas/Keyboard/Q/Right").transform;
+			lightLeft=GameObject.Find("Canvas/Keyboard/Q/Left").transform;
+			lightUp=GameObject.Find("Canvas/Keyboard/Q/Jump").transform;
         }
 
 
@@ -40,15 +47,35 @@ namespace UnityStandardAssets._2D
 					m_Jump = true;
 				}
             }
-			time++;
-			if (time == 1200) {
+			time--;
+			if (time <= 0) {
+				time = 800;
 				jNum=UnityEngine.Random.Range(0,jumpKey.Length);
 				rNum=UnityEngine.Random.Range(0,rightKey.Length);
 				lNum=UnityEngine.Random.Range(0,leftKey.Length);
 				print ("Jump: "+jumpKey[jNum]);
 				print ("Right: "+rightKey[rNum]);
 				print ("Left: "+leftKey[lNum]);
-				time = 0;
+				print ("Canvas/Keyboard/Q/"+rightKey[rNum].ToString());
+				keyName = rightKey[rNum].ToString ();
+				if (keyName.CompareTo ("Semicolon") == 0) {
+					keyName = ";";
+				}
+				key=GameObject.Find("Canvas/Keyboard/Q/"+keyName);
+				lightRight.SetParent(key.transform,false);
+				lightRight.SetAsFirstSibling();
+				keyName = leftKey[lNum].ToString ();
+				key=GameObject.Find("Canvas/Keyboard/Q/"+keyName);
+				lightLeft.SetParent(key.transform,false);
+				lightLeft.SetAsFirstSibling();
+				keyName = jumpKey[jNum].ToString ();
+				if (keyName.CompareTo ("Q") == 0) {
+					key = GameObject.Find ("Canvas/Keyboard/" + keyName);
+				} else {
+					key = GameObject.Find ("Canvas/Keyboard/Q/" + keyName);
+				}
+				lightUp.SetParent(key.transform,false);
+				lightUp.SetAsFirstSibling();
 			}
         }
 
