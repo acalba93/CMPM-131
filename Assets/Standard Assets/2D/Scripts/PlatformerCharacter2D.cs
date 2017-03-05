@@ -46,9 +46,16 @@ namespace UnityStandardAssets._2D
                     m_Grounded = true;
             }
             m_Anim.SetBool("Ground", m_Grounded);
-
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+			if (m_Rigidbody2D.transform.position.y<-300){
+			Lives--;
+			m_Rigidbody2D.transform.position = start;
+			print ("Lives: "+Lives);
+			if (Lives <= 0) {
+				Destroy (this.gameObject);
+			}
+			}
         }
 
 

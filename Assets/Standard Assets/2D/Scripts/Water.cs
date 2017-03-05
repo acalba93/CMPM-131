@@ -2,18 +2,17 @@
 using System.Collections;
 
 public class Water : MonoBehaviour {
-	[SerializeField] private float Speed=0.1f; 
-	private Rigidbody2D waterbody;
+	[SerializeField] private float Speed=0.02f; 
 	private Vector3 scale;
 	private Vector3 pos;
-	private int timer=240;
+	[SerializeField] private int Timer=200;
+	[SerializeField] private float MaxScale=1.5f;
 	private bool waterOn=false;
 
 	private void Awake()
 	{
-		waterbody = GetComponent<Rigidbody2D>();
-		scale = waterbody.transform.localScale;
-		pos = waterbody.transform.position;
+		scale = transform.localScale;
+		pos = transform.position;
 	}
 
 	// Use this for initialization
@@ -22,28 +21,28 @@ public class Water : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (timer > 0) {
-			timer--;
+		if (Timer > 0) {
+			Timer--;
 			if (waterOn) {
-				if (waterbody.transform.localScale.y<=20){
-					waterbody.transform.localScale += new Vector3 (0,Speed,0);
-					//waterbody.transform.position += new Vector3 (0,(Speed+0.2f),0);
+				if (transform.localScale.y<=MaxScale){
+					transform.localScale += new Vector3 (0,Speed,0);
+					transform.position += new Vector3 (0,(Speed*10),0);
 				//waterbody.transform.rotation=new Vector3 (0,0,0);
 				}
 			}
 			if (!waterOn) {
-				if (waterbody.transform.localScale.y > scale.y) {
-					waterbody.transform.localScale += new Vector3 (0, -Speed, 0);
-					//waterbody.transform.position += new Vector3 (0, -(Speed+0.2f), 0);
+				if (transform.localScale.y > scale.y) {
+					transform.localScale += new Vector3 (0, -Speed, 0);
+					transform.position += new Vector3 (0, -(Speed*10), 0);
 					//waterbody.transform.rotation=new Vector3 (0,0,0);
 				} else {
-					waterbody.transform.localScale = scale;
-					waterbody.transform.position=pos;
+					transform.localScale = scale;
+					transform.position=pos;
 				}
 			}
 		} else {
 			waterOn=!waterOn;
-			timer = 240;
+			Timer = 240;
 		}
 	}
 }
