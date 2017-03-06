@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UnityStandardAssets._2D
 {
@@ -21,6 +22,7 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 		private Vector3 start;
+		private GameObject stoplight;
 
         private void Awake()
         {
@@ -30,6 +32,7 @@ namespace UnityStandardAssets._2D
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
 			start = m_Rigidbody2D.position;
+			stoplight = GameObject.FindWithTag ("Number of Lives");
         }
 
 
@@ -50,8 +53,14 @@ namespace UnityStandardAssets._2D
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
 			if (m_Rigidbody2D.transform.position.y<-300){
 			Lives--;
+				if (Lives == 1) {
+					stoplight.GetComponent<Image>().color=new Color (0.75f, 0, 0, 1);
+				} else if (Lives == 2) {
+					stoplight.GetComponent<Image> ().color = Color.yellow;
+				} else if (Lives == 3) {
+					stoplight.GetComponent<Image>().color=new Color(0,0.5f,0,1);
+				}
 			m_Rigidbody2D.transform.position = start;
-			print ("Lives: "+Lives);
 			if (Lives <= 0) {
 				Destroy (this.gameObject);
 			}
@@ -125,14 +134,26 @@ namespace UnityStandardAssets._2D
 			if (coll.gameObject.tag == "Enemy") {
 				Lives--;
 				m_Rigidbody2D.transform.position = start;
-				print ("Lives: "+Lives);
 				if (Lives <= 0) {
 					Destroy (this.gameObject);
 				}
+				if (Lives == 1) {
+					stoplight.GetComponent<Image>().color=new Color (0.75f, 0, 0, 1);
+				} else if (Lives == 2) {
+					stoplight.GetComponent<Image> ().color = Color.yellow;
+				} else if (Lives == 3) {
+					stoplight.GetComponent<Image>().color=new Color(0,0.5f,0,1);
+				}
 			} else if (coll.gameObject.tag == "Heart") {
-				Lives++;
+				if (Lives<3)Lives++;
 				Destroy (coll.gameObject);
-				print ("Lives: "+Lives);
+				if (Lives == 1) {
+					stoplight.GetComponent<Image> ().color =new Color (0.75f, 0, 0, 1);
+				} else if (Lives == 2) {
+					stoplight.GetComponent<Image> ().color = Color.yellow;
+				} else if (Lives == 3) {
+					stoplight.GetComponent<Image> ().color = new Color (0, 0.5f, 0, 1);
+				}
 			}
 		}
     }
