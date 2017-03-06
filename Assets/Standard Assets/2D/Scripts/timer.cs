@@ -19,7 +19,7 @@ public class timer : MonoBehaviour {
 	void Update () {
         minutes = (int)(Time.timeSinceLevelLoad / 60f);
         seconds = (int)(Time.timeSinceLevelLoad % 60f);
-        counterText.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+        counterText.text = "Time" + " " + minutes.ToString("00") + ":" + seconds.ToString("00");
 
     }
 }
