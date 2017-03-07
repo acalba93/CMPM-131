@@ -132,6 +132,7 @@ namespace UnityStandardAssets._2D
 					stoplight.GetComponent<Image>().color=new Color(0,0.5f,0,1);
 				}
 			} else if (coll.gameObject.tag == "Heart") {
+				Destroy (coll.collider.gameObject);
 				if (Lives<3)Lives++;
 				if (Lives == 1) {
 					stoplight.GetComponent<Image> ().color =new Color (0.75f, 0, 0, 1);
