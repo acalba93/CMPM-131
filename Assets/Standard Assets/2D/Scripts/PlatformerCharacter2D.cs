@@ -133,7 +133,6 @@ namespace UnityStandardAssets._2D
 				}
 			} else if (coll.gameObject.tag == "Heart") {
 				if (Lives<3)Lives++;
-				SceneManager.LoadScene("level_1");
 				if (Lives == 1) {
 					stoplight.GetComponent<Image> ().color =new Color (0.75f, 0, 0, 1);
 				} else if (Lives == 2) {
