@@ -20,6 +20,7 @@ public class timer : MonoBehaviour {
         minutes = (int)(Time.timeSinceLevelLoad / 60f);
         seconds = (int)(Time.timeSinceLevelLoad % 60f);
         counterText.text = "Time" + " " + minutes.ToString("00") + ":" + seconds.ToString("00");
+        PlayerPrefs.SetString("Time", counterText.text);
 
     }
 }
