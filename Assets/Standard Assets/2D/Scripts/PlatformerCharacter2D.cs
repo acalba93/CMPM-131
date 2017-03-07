@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace UnityStandardAssets._2D
 {
@@ -51,20 +52,6 @@ namespace UnityStandardAssets._2D
             m_Anim.SetBool("Ground", m_Grounded);
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
-			if (m_Rigidbody2D.transform.position.y<-300){
-			Lives--;
-				if (Lives == 1) {
-					stoplight.GetComponent<Image>().color=new Color (0.75f, 0, 0, 1);
-				} else if (Lives == 2) {
-					stoplight.GetComponent<Image> ().color = Color.yellow;
-				} else if (Lives == 3) {
-					stoplight.GetComponent<Image>().color=new Color(0,0.5f,0,1);
-				}
-			m_Rigidbody2D.transform.position = start;
-			if (Lives <= 0) {
-				Destroy (this.gameObject);
-			}
-			}
         }
 
 
@@ -135,7 +122,7 @@ namespace UnityStandardAssets._2D
 				Lives--;
 				m_Rigidbody2D.transform.position = start;
 				if (Lives <= 0) {
-					Destroy (this.gameObject);
+					SceneManager.LoadScene("level_1");
 				}
 				if (Lives == 1) {
 					stoplight.GetComponent<Image>().color=new Color (0.75f, 0, 0, 1);
@@ -146,7 +133,7 @@ namespace UnityStandardAssets._2D
 				}
 			} else if (coll.gameObject.tag == "Heart") {
 				if (Lives<3)Lives++;
-				Destroy (coll.gameObject);
+				SceneManager.LoadScene("level_1");
 				if (Lives == 1) {
 					stoplight.GetComponent<Image> ().color =new Color (0.75f, 0, 0, 1);
 				} else if (Lives == 2) {
