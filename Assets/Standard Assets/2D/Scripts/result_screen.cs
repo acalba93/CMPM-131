@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class result_screen : MonoBehaviour {
     public Text resultText;
+    public Text live_word;
 
     // Use this for initialization
     void Start () {
         resultText = GetComponent<Text>() as Text;
-		resultText.text = PlayerPrefs.GetString("Time Completed: ")+"\n\n"+PlayerPrefs.GetString("Lives Remaining: ");
+        resultText.text = "Time Completed: " + PlayerPrefs.GetString("Time") + "\n\n" + "Lives Remaining: " + PlayerPrefs.GetString("Lives Remaining: ");
         //print(PlayerPrefs.GetString("Time"));
 
     }
