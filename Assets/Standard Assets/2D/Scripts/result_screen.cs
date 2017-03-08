@@ -10,7 +10,7 @@ public class result_screen : MonoBehaviour {
     // Use this for initialization
     void Start () {
         resultText = GetComponent<Text>() as Text;
-        resultText.text = PlayerPrefs.GetString("Time");
+		resultText.text = PlayerPrefs.GetString("Time Completed: ")+"\n\n"+PlayerPrefs.GetString("Lives Remaining: ");
         //print(PlayerPrefs.GetString("Time"));
 
     }

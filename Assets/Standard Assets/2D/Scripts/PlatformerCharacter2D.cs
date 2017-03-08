@@ -34,6 +34,7 @@ namespace UnityStandardAssets._2D
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
 			start = m_Rigidbody2D.position;
 			stoplight = GameObject.FindWithTag ("Number of Lives");
+			PlayerPrefs.SetString("Lives Remaining: ", Lives.ToString());
         }
 
 
@@ -120,9 +121,10 @@ namespace UnityStandardAssets._2D
 		void OnCollisionEnter2D(Collision2D coll) {
 			if (coll.gameObject.tag == "Enemy") {
 				Lives--;
+				PlayerPrefs.SetString("Lives Remaining: ", Lives.ToString());
 				m_Rigidbody2D.transform.position = start;
 				if (Lives <= 0) {
-					SceneManager.LoadScene("level_1");
+					SceneManager.LoadScene("MainMenu");
 				}
 				if (Lives == 1) {
 					stoplight.GetComponent<Image>().color=new Color (0.75f, 0, 0, 1);
@@ -132,8 +134,10 @@ namespace UnityStandardAssets._2D
 					stoplight.GetComponent<Image>().color=new Color(0,0.5f,0,1);
 				}
 			} else if (coll.gameObject.tag == "Heart") {
+				start = coll.collider.gameObject.transform.position;
 				Destroy (coll.collider.gameObject);
 				if (Lives<3)Lives++;
+				PlayerPrefs.SetString("Lives Remaining: ", Lives.ToString());
 				if (Lives == 1) {
 					stoplight.GetComponent<Image> ().color =new Color (0.75f, 0, 0, 1);
 				} else if (Lives == 2) {

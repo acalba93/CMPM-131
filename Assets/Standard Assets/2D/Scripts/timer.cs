@@ -9,7 +9,7 @@ public class timer : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+void Start () {
         counterText = GetComponent<Text>() as Text;
       
 		
@@ -19,7 +19,7 @@ public class timer : MonoBehaviour {
 	void Update () {
         minutes = (int)(Time.timeSinceLevelLoad / 60f);
         seconds = (int)(Time.timeSinceLevelLoad % 60f);
-        counterText.text = "Time" + " " + minutes.ToString("00") + ":" + seconds.ToString("00");
+        counterText.text = "Time Completed: " + " " + minutes.ToString("00") + ":" + seconds.ToString("00");
         PlayerPrefs.SetString("Time", counterText.text);
 
     }
