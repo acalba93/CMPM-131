@@ -13,6 +13,8 @@ namespace UnityStandardAssets._2D
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
 		[SerializeField] public int Lives = 3; 
+		private bool invincible=true;
+		private int tick=0;
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -40,6 +42,11 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
+			if (tick < 10) {
+				tick++;
+			} else {
+				invincible = false;
+			}
             m_Grounded = false;
 
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -120,13 +127,16 @@ namespace UnityStandardAssets._2D
 
 		void OnCollisionEnter2D(Collision2D coll) {
 			if (coll.gameObject.tag == "Enemy") {
-				Lives--;
-				PlayerPrefs.SetString("Lives Remaining: ", Lives.ToString());
-				m_Rigidbody2D.transform.position = start;
-				if (Lives <= 0) {
-					SceneManager.LoadScene("game_over");
+				if (!invincible) {
+					m_Rigidbody2D.transform.position = start;
+					Lives--;	
+					invincible = true;
+					tick = 0;
 				}
-				if (Lives == 1) {
+				PlayerPrefs.SetString ("Lives Remaining: ", Lives.ToString ());
+				if (Lives <= 0) {
+					SceneManager.LoadScene ("game_over");
+				} else if (Lives == 1) {
 					stoplight.GetComponent<Image>().color=new Color (0.75f, 0, 0, 1);
 				} else if (Lives == 2) {
 					stoplight.GetComponent<Image> ().color = Color.yellow;

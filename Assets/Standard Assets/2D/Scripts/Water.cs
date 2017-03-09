@@ -25,15 +25,15 @@ public class Water : MonoBehaviour {
 			Timer--;
 			if (waterOn) {
 				if (transform.localScale.y<=MaxScale){
-					transform.localScale += new Vector3 (0,Speed,0);
-					transform.position += new Vector3 (0,(Speed*10),0);
+					transform.localScale += new Vector3 (Speed/10,Speed,0);
+					transform.position += new Vector3 (0,(Speed),0);
 				//waterbody.transform.rotation=new Vector3 (0,0,0);
 				}
 			}
 			if (!waterOn) {
 				if (transform.localScale.y > scale.y) {
-					transform.localScale += new Vector3 (0, -Speed, 0);
-					transform.position += new Vector3 (0, -(Speed*10), 0);
+					transform.localScale += new Vector3 (-Speed/10, -Speed, 0);
+					transform.position += new Vector3 (0, -(Speed), 0);
 					//waterbody.transform.rotation=new Vector3 (0,0,0);
 				} else {
 					transform.localScale = scale;
