@@ -124,7 +124,7 @@ namespace UnityStandardAssets._2D
 				PlayerPrefs.SetString("Lives Remaining: ", Lives.ToString());
 				m_Rigidbody2D.transform.position = start;
 				if (Lives <= 0) {
-					SceneManager.LoadScene("MainMenu");
+					SceneManager.LoadScene("game_over");
 				}
 				if (Lives == 1) {
 					stoplight.GetComponent<Image>().color=new Color (0.75f, 0, 0, 1);
